@@ -20,21 +20,6 @@
     </div>
   </header>
 
-  {{ if .message }}
-    <h4>{{ .message }}</h4>
-  {{ end }}
-
-  {{ if .isLoggedIn }}
-    <div class="loginButtons">
-      <a href="logout" class="btn btn-primary">로그아웃</a>
-      <a href="profile" class="btn btn-secondary">회원정보</a>
-    </div>
-  {{ else }}
-    <div class="buttons">
-      <a href="login" class="btn btn-primary">로그인</a>
-      <a href="signup" class="btn btn-secondary">회원가입</a>
-    </div>
-  {{ end }}
   </section>
   <section class="main-categories">
     <h2>주요 카테고리</h2>
