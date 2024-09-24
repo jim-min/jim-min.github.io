@@ -1,0 +1,177 @@
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GongGothicMedium';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+ul {
+  /* 점 없애고 padding-left 있던 거 치우기 */
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+body{
+  font-family: 'GongGothicMedium';
+  background-color: rgb(103, 103, 103);
+}
+
+h1, h2, h4{
+  text-align: center;
+
+}
+.header {
+  /* display: none; */
+  font-family: 'GmarketSansMedium';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  padding: 15px 15px 10px;
+  background-color: rgba(255, 255, 255, 0.843);
+  margin-bottom: 16px;
+}
+
+.main {
+  position: relative;
+  width: 80%;
+  margin: auto;
+}
+
+.menu,
+.logo,
+.search {
+  float: left;
+}
+
+.menu{
+  width: 100%;
+}
+.gnb-menu {
+  display: none;
+}
+
+.gnb-menu > ul{
+  display: flex;
+  overflow: auto;
+  padding-left : 0; /* 얘는 padding-left 없는 게 예쁜 듯 */
+  margin-bottom: 0px;
+}
+
+.gnb-column{
+  float: left;
+  flex: 1;
+  margin-right: 30px;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.gnb-column > ul{
+  padding-left : 0; /* 얘는 padding-left 없는 게 예쁜 듯 */
+
+}
+.menu-box {
+  text-align: center;
+  height: 50px;
+}
+
+.menu-box:hover{
+  background-color: #ccc;
+}
+
+.menu-top{
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+}
+
+.menu-box a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.search {
+  position: absolute;
+  right: 40px;
+}
+
+.search-form {
+  display: none;
+}
+
+.round-box {
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: rgba(169, 169, 169, 0.216);
+  border-style: solid;
+  padding: 15px;
+}
+
+.intro-wrap {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.intro {
+  flex: 1;
+  margin: 0.75%;
+  box-sizing: border-box;
+}
+.social{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.intro-li:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.intro>ul {
+  margin : 0 auto;
+}
+
+.intro-li > img {
+  float: left;
+  height: 50px;
+  width: 50px;
+  margin: 5px;
+}
+.swiper {
+  width: 100% !important;
+  height: 600px !important;
+}
+
+.swiper-slide > a {
+  display: flex;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.project {
+  margin-top: 15px;
+}
+
+.first-project{
+  margin-top: 0;
+}
