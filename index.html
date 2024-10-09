@@ -21,10 +21,7 @@
                 <ul class="">
                     <li class="gnb-column">
                         <ul>
-                            <li class="menu-box menu-top"><a href="#">1</a></li>
-                            <li class="menu-box"><a href="/">1-1</a></li>
-                            <li class="menu-box"><a href="/">1-2</a></li>
-                            <li class="menu-box"><a href="/">1-3</a></li>
+                            <li class="menu-box menu-top"><a href="#top">Home</a></li>
                         </ul>
                     </li>
                     <li class="gnb-column">
@@ -45,10 +42,9 @@
                     </li>
                     <li class="gnb-column">
                         <ul>
-                            <li class="menu-box menu-top"><a href="#">4</a></li>
-                            <li class="menu-box"><a href="/">4-1</a></li>
-                            <li class="menu-box"><a href="/">4-2</a></li>
-                            <li class="menu-box"><a href="/">4-3</a></li>
+                            <li class="menu-box menu-top"><a href="#none">About</a></li>
+                            <li class="menu-box"><a href="#introduce-section">자기소개</a></li>
+                            <li class="menu-box"><a href="#footer">Contact</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -267,13 +263,22 @@
                 </div>
             </div>
         </section>
-        <section class="introduce-section">
+        <section class="introduce-section" id="introduce-section">
             <h1>자기소개</h1>
             <div class="round-box">
-                <h4>안녕하세요. 개발을 하고 있는 김지민입니다.</h4>
-                <div class="social">
-                    <img src="src/githubicon.png" alt="" height="30px" width="30px"><a href="https://github.com/nowimseeingcashflow" style="margin-right:10px; font-size: large;">깃허브</a>
-                    <img src="src/instaicon.png" alt="" height="30px" width="30px"><a href="https://instagram.com/gemini.aqr" style="font-size: large;">인스타그램</a>
+                <div class="profile-wrap">
+                  <div class="profile">
+                    <img src="src/happy-happy-happy-cat.gif" alt="">
+                  </div>
+                  <div class="profile">
+                    <h2 class="aboutme-title">안녕하세요. 개발을 하고 있는 김지민입니다.</h2>
+                    <ul class="aboutme-ul">
+                      <li class="aboutme">학교　　　|　홍익대학교 컴퓨터공학과 재학</li>
+                      <li class="aboutme">생년월일　|　2002.02.18</li>
+                      <li class="aboutme">위치　　　|　서울특별시 마포구</li>
+                      <li class="aboutme">개발　　　|　프론트엔드, 백엔드</li>
+                    </ul>
+                  </div>
                 </div>
                 <div class="intro-wrap">    
                     <div class="intro round-box">
@@ -328,6 +333,18 @@
             </div>
         </section>
     </main>
+<footer class="footer" id="footer">
+  <div class="social">
+    <a href="https://github.com/nowimseeingcashflow" style="margin-right:10px; font-size: large;"><img src="src/githubicon2.png" alt="" height="30px" width="30px"></a>
+    <a href="https://instagram.com/gemini.aqr" style="font-size: large;"><img src="src/instaicon.png" alt="" height="30px" width="30px"></a>
+  </div>
+  <div class="text">
+    Contact |  010-9907-6496
+  </div>
+  <div class="text copyright">
+    © 2024 김지민. All rights reserved.
+  </div>
+</footer>
 </body>
 <script>
     const swiper = new Swiper('.swiper', {
