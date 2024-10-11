@@ -210,9 +210,24 @@ h1, h2, h3, h4{
 .aboutme {
   list-style-type: none; /* Remove bullet points */
   margin-bottom: 10px; /* Adjust this value to set the space between items */
+  padding: 15px;
   font-size: 20px;
+  background-color: #ccc; /* Replace with your desired background color */
+  border-radius: 15px; /* This makes the background perfectly round */
+  height: 200px; /* Make sure the height is the same as the width for a perfect circle */
+  display: flex; /* This helps center the content inside */
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
-
+.aboutme:hover {
+  transform: scale(1.03); /* Slightly enlarges on hover */
+}
+#aboutme-left {
+  /* text-align: left; */
+  margin-right: 10px; /* Adjust as needed */
+}
 /* Remove margin from the last item to avoid extra space at the bottom */
 .aboutme:last-child {
   margin-bottom: 0;
