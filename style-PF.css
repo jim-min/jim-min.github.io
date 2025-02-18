@@ -20,11 +20,17 @@ ul {
 body{
   font-family: 'GongGothicMedium';
   background-color: rgb(103, 103, 103);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1, h2, h3, h4{
   text-align: center;
 }
+
 .header {
   font-family: 'GmarketSansMedium';
   position: fixed;
@@ -41,6 +47,7 @@ h1, h2, h3, h4{
   position: relative;
   width: 80%;
   margin: auto;
+  flex: 1;
 }
 
 .titles {
@@ -209,10 +216,12 @@ h1, h2, h3, h4{
   margin: 0.75%;
   margin-bottom: 50px;
 }
+
 .aboutme-title{
   box-sizing: border-box;
   height: 10%; 
 }
+
 .aboutme-ul {
   display: flex;
   flex-direction: column;
@@ -319,18 +328,51 @@ h1, h2, h3, h4{
   margin-top: 15px;
 }
 
-.first-project{
+.first-project {
   margin-top: 0;
+}
+
+.project-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.project-intro img {
+  width: 500px;
+  max-width: 100%;
+  height: auto;
+}
+
+.project-intro-li {
+  margin-bottom: 10px;
+  margin-left: 30px;
+  padding: 15px;
+  font-size: 20px;
+  background-color: #ccc;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+  max-height: 50px;
+}
+
+.project-intro-li:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
 .footer{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 15px -8px -10px;
-  padding: 20px;
-  background-color: rgb(210, 210, 210);
-  /* height: 200px; */
+  justify-content: center;
+  background-color: #ccc;
+  padding: 20px 0;
+  width: 100%;
+  margin-top: 50px;
 }
 
 .text{
@@ -338,8 +380,43 @@ h1, h2, h3, h4{
   text-align: center;
   padding: 10px 0px;
   width: 50%;
+  margin: 5px 0;
 }
 
 .copyright{
   border-top: 1px solid #ccc;
+}
+
+/* Media Queries - Always at the end of the file */
+@media screen and (max-width: 768px) {
+  .aboutme {
+    font-size: 16px !important;
+    padding: 10px;
+  }
+  
+  .aboutme > span:nth-child(2) {
+    margin: 0 20px;
+  }
+
+  .aboutme > span:first-child {
+    min-width: 60px;
+  }
+
+  .project-intro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .project-intro img {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .project-intro-li {
+    position: relative;
+    margin-left: 0;
+    padding: 10px;
+    font-size: 16px;
+    white-space: normal;
+  }
 }

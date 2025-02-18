@@ -14,338 +14,358 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
-    <header class="header">
-        <div class="menu">
-            <a href="#none"><img id="gnb-opener" src="src/menu-icon.png" alt="메뉴 열기" width="30px" height="30px"></a>
-            <nav class="gnb-menu">
-                <ul class="">
-                    <li class="gnb-column">
-                        <ul>
-                            <li class="menu-box menu-top"><a href="#top">Home</a></li>
-                        </ul>
-                    </li>
-                    <li class="gnb-column">
-                        <ul>
-                            <li class="menu-box menu-top"><a href="#">개발</a></li>
-                            <li class="menu-box"><a href="/">공부</a></li>
-                            <li class="menu-box"><a href="/">프로젝트</a></li>
-                            <li class="menu-box"><a href="/">과제</a></li>
-                            <li class="menu-box"><a href="/">ETC</a></li>
-                        </ul>
-                    </li>
-                    <li class="gnb-column">
-                        <ul>
-                            <li class="menu-box menu-top"><a href="#">사진첩</a></li>
-                            <li class="menu-box"><a href="/">옛날 사진</a></li>
-                            <li class="menu-box"><a href="/">최근 사진</a></li>
-                        </ul>
-                    </li>
-                    <li class="gnb-column">
-                        <ul>
-                            <li class="menu-box menu-top"><a href="#none">About</a></li>
-                            <li class="menu-box"><a href="#introduce-section">자기소개</a></li>
-                            <li class="menu-box"><a href="#footer">Contact</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="logo">
-            <a href="/"><img src="src/logo.png" alt="JM"></a>
-        </div>
-        <div class="search">
-            <a href="#none"><img id="search-opener" src="src/search-icon.png" alt="검색"></a>
-            <form action="" class="search-form">
-                <input type="text" id="search">
-                <button id="search-button" type="submit">
-                    <img src="src/search-icon.png" alt="Search">
-                  </button>
-            </form>
-        </div>
-    </header>
-    <main class="main">
-        <section class="swiper-section">
-            <div class="swiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><a href="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                            <rect width="1600" height="900" fill="#2c3e50"/>
-                            <text x="800" y="450" font-size="100" fill="white" text-anchor="middle" dominant-baseline="middle">환영합니다!</text>
-                            <g transform="translate(700,600)">
-                              <path d="M50,0 A50,50 0 1,1 50,1 z" fill="yellow"/>
-                              <circle cx="30" cy="30" r="5" fill="black"/>
-                              <circle cx="70" cy="30" r="5" fill="black"/>
-                              <path d="M30,60 Q50,80 70,60" stroke="black" stroke-width="3" fill="none"/>
-                            </g>
-                          </svg>
-                    </a></div>
-                    <div class="swiper-slide"><a href="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                            <!-- 배경 -->
-                            <rect width="1600" height="900" fill="#2c3e50"/>
-                            
-                            <!-- 중앙 컨테이너 -->
-                            <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
-                            
-                            <!-- 메인 텍스트 -->
-                            <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
-                            
-                            <!-- 작은 설명 텍스트 -->
-                            <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
-                            
-                            <!-- 기어 아이콘 -->
-                            <g transform="translate(700,320) rotate(0)">
-                              <animateTransform
-                                attributeName="transform"
-                                attributeType="XML"
-                                type="rotate"
-                                from="0 800 320"
-                                to="360 800 320"
-                                dur="10s"
-                                repeatCount="indefinite"/>
-                              <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
-                                    stroke="#3498db" 
-                                    stroke-width="8" 
-                                    fill="none"/>
-                            </g>
-                            
-                            <!-- 작은 점 애니메이션 -->
-                            <g transform="translate(800,600)">
-                              <circle cx="-40" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
-                              </circle>
-                              <circle cx="0" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                              </circle>
-                              <circle cx="40" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                              </circle>
-                            </g>
-                          </svg>
-                    </a></div>
-                    <div class="swiper-slide"><a href="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                            <!-- 배경 -->
-                            <rect width="1600" height="900" fill="#2c3e50"/>
-                            
-                            <!-- 중앙 컨테이너 -->
-                            <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
-                            
-                            <!-- 메인 텍스트 -->
-                            <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
-                            
-                            <!-- 작은 설명 텍스트 -->
-                            <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
-                            
-                            <!-- 기어 아이콘 -->
-                            <g transform="translate(700,320) rotate(0)">
-                              <animateTransform
-                                attributeName="transform"
-                                attributeType="XML"
-                                type="rotate"
-                                from="0 800 320"
-                                to="360 800 320"
-                                dur="10s"
-                                repeatCount="indefinite"/>
-                              <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
-                                    stroke="#3498db" 
-                                    stroke-width="8" 
-                                    fill="none"/>
-                            </g>
-                            
-                            <!-- 작은 점 애니메이션 -->
-                            <g transform="translate(800,600)">
-                              <circle cx="-40" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
-                              </circle>
-                              <circle cx="0" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                              </circle>
-                              <circle cx="40" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                              </circle>
-                            </g>
-                          </svg>
-                    </a></div>
-                    <div class="swiper-slide"><a href="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                            <!-- 배경 -->
-                            <rect width="1600" height="900" fill="#2c3e50"/>
-                            
-                            <!-- 중앙 컨테이너 -->
-                            <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
-                            
-                            <!-- 메인 텍스트 -->
-                            <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
-                            
-                            <!-- 작은 설명 텍스트 -->
-                            <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
-                            
-                            <!-- 기어 아이콘 -->
-                            <g transform="translate(700,320) rotate(0)">
-                              <animateTransform
-                                attributeName="transform"
-                                attributeType="XML"
-                                type="rotate"
-                                from="0 800 320"
-                                to="360 800 320"
-                                dur="10s"
-                                repeatCount="indefinite"/>
-                              <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
-                                    stroke="#3498db" 
-                                    stroke-width="8" 
-                                    fill="none"/>
-                            </g>
-                            
-                            <!-- 작은 점 애니메이션 -->
-                            <g transform="translate(800,600)">
-                              <circle cx="-40" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
-                              </circle>
-                              <circle cx="0" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                              </circle>
-                              <circle cx="40" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                              </circle>
-                            </g>
-                          </svg>
-                    </a></div>
-                    <div class="swiper-slide"><a href="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                            <!-- 배경 -->
-                            <rect width="1600" height="900" fill="#2c3e50"/>
-                            
-                            <!-- 중앙 컨테이너 -->
-                            <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
-                            
-                            <!-- 메인 텍스트 -->
-                            <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
-                            
-                            <!-- 작은 설명 텍스트 -->
-                            <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
-                            
-                            <!-- 기어 아이콘 -->
-                            <g transform="translate(700,320) rotate(0)">
-                              <animateTransform
-                                attributeName="transform"
-                                attributeType="XML"
-                                type="rotate"
-                                from="0 800 320"
-                                to="360 800 320"
-                                dur="10s"
-                                repeatCount="indefinite"/>
-                              <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
-                                    stroke="#3498db" 
-                                    stroke-width="8" 
-                                    fill="none"/>
-                            </g>
-                            
-                            <!-- 작은 점 애니메이션 -->
-                            <g transform="translate(800,600)">
-                              <circle cx="-40" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
-                              </circle>
-                              <circle cx="0" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                              </circle>
-                              <circle cx="40" cy="0" r="10" fill="#e74c3c">
-                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                              </circle>
-                            </g>
-                          </svg>
-                    </a></div>
-                    <div class="swiper-pagination"></div>
+  <header class="header">
+      <div class="menu">
+          <a href="#none"><img id="gnb-opener" src="src/menu-icon.png" alt="메뉴 열기" width="30px" height="30px"></a>
+          <nav class="gnb-menu">
+              <ul class="">
+                  <li class="gnb-column">
+                      <ul>
+                          <li class="menu-box menu-top"><a href="#top">Home</a></li>
+                      </ul>
+                  </li>
+                  <li class="gnb-column">
+                      <ul>
+                          <li class="menu-box menu-top"><a href="#">개발</a></li>
+                          <li class="menu-box"><a href="/">공부</a></li>
+                          <li class="menu-box"><a href="/">프로젝트</a></li>
+                          <li class="menu-box"><a href="/">과제</a></li>
+                          <li class="menu-box"><a href="/">ETC</a></li>
+                      </ul>
+                  </li>
+                  <li class="gnb-column">
+                      <ul>
+                          <li class="menu-box menu-top"><a href="#">사진첩</a></li>
+                          <li class="menu-box"><a href="/">옛날 사진</a></li>
+                          <li class="menu-box"><a href="/">최근 사진</a></li>
+                      </ul>
+                  </li>
+                  <li class="gnb-column">
+                      <ul>
+                          <li class="menu-box menu-top"><a href="#none">About</a></li>
+                          <li class="menu-box"><a href="#introduce-section">자기소개</a></li>
+                          <li class="menu-box"><a href="#footer">Contact</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </nav>
+      </div>
+      <div class="logo">
+          <a href="/"><img src="src/logo.png" alt="JM"></a>
+      </div>
+      <div class="search">
+          <a href="#none"><img id="search-opener" src="src/search-icon.png" alt="검색"></a>
+          <form action="" class="search-form">
+              <input type="text" id="search">
+              <button id="search-button" type="submit">
+                  <img src="src/search-icon.png" alt="Search">
+                </button>
+          </form>
+      </div>
+  </header>
+  <main class="main">
+      <section class="swiper-section">
+          <div class="swiper">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide"><a href="/">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+                          <rect width="1600" height="900" fill="#2c3e50"/>
+                          <text x="800" y="450" font-size="100" fill="white" text-anchor="middle" dominant-baseline="middle">환영합니다!</text>
+                          <g transform="translate(700,600)">
+                            <path d="M50,0 A50,50 0 1,1 50,1 z" fill="yellow"/>
+                            <circle cx="30" cy="30" r="5" fill="black"/>
+                            <circle cx="70" cy="30" r="5" fill="black"/>
+                            <path d="M30,60 Q50,80 70,60" stroke="black" stroke-width="3" fill="none"/>
+                          </g>
+                        </svg>
+                  </a></div>
+                  <div class="swiper-slide"><a href="/">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+                          <!-- 배경 -->
+                          <rect width="1600" height="900" fill="#2c3e50"/>
+                          
+                          <!-- 중앙 컨테이너 -->
+                          <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
+                          
+                          <!-- 메인 텍스트 -->
+                          <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
+                          
+                          <!-- 작은 설명 텍스트 -->
+                          <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
+                          
+                          <!-- 기어 아이콘 -->
+                          <g transform="translate(700,320) rotate(0)">
+                            <animateTransform
+                              attributeName="transform"
+                              attributeType="XML"
+                              type="rotate"
+                              from="0 800 320"
+                              to="360 800 320"
+                              dur="10s"
+                              repeatCount="indefinite"/>
+                            <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
+                                  stroke="#3498db" 
+                                  stroke-width="8" 
+                                  fill="none"/>
+                          </g>
+                          
+                          <!-- 작은 점 애니메이션 -->
+                          <g transform="translate(800,600)">
+                            <circle cx="-40" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
+                            </circle>
+                            <circle cx="0" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                            </circle>
+                            <circle cx="40" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </circle>
+                          </g>
+                        </svg>
+                  </a></div>
+                  <div class="swiper-slide"><a href="/">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+                          <!-- 배경 -->
+                          <rect width="1600" height="900" fill="#2c3e50"/>
+                          
+                          <!-- 중앙 컨테이너 -->
+                          <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
+                          
+                          <!-- 메인 텍스트 -->
+                          <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
+                          
+                          <!-- 작은 설명 텍스트 -->
+                          <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
+                          
+                          <!-- 기어 아이콘 -->
+                          <g transform="translate(700,320) rotate(0)">
+                            <animateTransform
+                              attributeName="transform"
+                              attributeType="XML"
+                              type="rotate"
+                              from="0 800 320"
+                              to="360 800 320"
+                              dur="10s"
+                              repeatCount="indefinite"/>
+                            <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
+                                  stroke="#3498db" 
+                                  stroke-width="8" 
+                                  fill="none"/>
+                          </g>
+                          
+                          <!-- 작은 점 애니메이션 -->
+                          <g transform="translate(800,600)">
+                            <circle cx="-40" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
+                            </circle>
+                            <circle cx="0" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                            </circle>
+                            <circle cx="40" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </circle>
+                          </g>
+                        </svg>
+                  </a></div>
+                  <div class="swiper-slide"><a href="/">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+                          <!-- 배경 -->
+                          <rect width="1600" height="900" fill="#2c3e50"/>
+                          
+                          <!-- 중앙 컨테이너 -->
+                          <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
+                          
+                          <!-- 메인 텍스트 -->
+                          <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
+                          
+                          <!-- 작은 설명 텍스트 -->
+                          <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
+                          
+                          <!-- 기어 아이콘 -->
+                          <g transform="translate(700,320) rotate(0)">
+                            <animateTransform
+                              attributeName="transform"
+                              attributeType="XML"
+                              type="rotate"
+                              from="0 800 320"
+                              to="360 800 320"
+                              dur="10s"
+                              repeatCount="indefinite"/>
+                            <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
+                                  stroke="#3498db" 
+                                  stroke-width="8" 
+                                  fill="none"/>
+                          </g>
+                          
+                          <!-- 작은 점 애니메이션 -->
+                          <g transform="translate(800,600)">
+                            <circle cx="-40" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
+                            </circle>
+                            <circle cx="0" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                            </circle>
+                            <circle cx="40" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </circle>
+                          </g>
+                        </svg>
+                  </a></div>
+                  <div class="swiper-slide"><a href="/">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+                          <!-- 배경 -->
+                          <rect width="1600" height="900" fill="#2c3e50"/>
+                          
+                          <!-- 중앙 컨테이너 -->
+                          <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
+                          
+                          <!-- 메인 텍스트 -->
+                          <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
+                          
+                          <!-- 작은 설명 텍스트 -->
+                          <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
+                          
+                          <!-- 기어 아이콘 -->
+                          <g transform="translate(700,320) rotate(0)">
+                            <animateTransform
+                              attributeName="transform"
+                              attributeType="XML"
+                              type="rotate"
+                              from="0 800 320"
+                              to="360 800 320"
+                              dur="10s"
+                              repeatCount="indefinite"/>
+                            <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
+                                  stroke="#3498db" 
+                                  stroke-width="8" 
+                                  fill="none"/>
+                          </g>
+                          
+                          <!-- 작은 점 애니메이션 -->
+                          <g transform="translate(800,600)">
+                            <circle cx="-40" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
+                            </circle>
+                            <circle cx="0" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                            </circle>
+                            <circle cx="40" cy="0" r="10" fill="#e74c3c">
+                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </circle>
+                          </g>
+                        </svg>
+                  </a></div>
+                  <div class="swiper-pagination"></div>
 
-                    <!-- If we need navigation buttons -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                  <!-- If we need navigation buttons -->
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+              </div>
+          </div>
+      </section>
+      <section class="introduce-section" id="introduce-section">
+          <h1 class="titles">자기소개</h1>
+          <div class="round-box">
+              <div class="profile-wrap">
+                <div class="profile">
+                  <img src="src/happy-happy-happy-cat.gif" alt="">
                 </div>
-            </div>
-        </section>
-        <section class="introduce-section" id="introduce-section">
-            <h1 class="titles">자기소개</h1>
-            <div class="round-box">
-                <div class="profile-wrap">
-                  <div class="profile">
-                    <img src="src/happy-happy-happy-cat.gif" alt="">
+                <div class="profile">
+                  <h2 class="aboutme-title">안녕하세요. 개발을 하고 있는 김지민입니다.</h2>
+                  <ul class="aboutme-ul">
+                    <li class="aboutme"><span>학교</span><span>|</span><span>홍익대학교 컴퓨터공학과 재학</span></li>
+                    <li class="aboutme"><span>생년월일</span><span>|</span><span>2002.02.18</span></li>
+                    <li class="aboutme"><span>위치</span><span>|</span><span>서울특별시 마포구</span></li>
+                    <li class="aboutme"><span>개발</span><span>|</span><span>프론트엔드, 백엔드</span></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="intro-wrap">    
+                  <div class="intro round-box">
+                      <h2>Front-End</h2>
+                      <ul>
+                          <li class="intro-li"><img src="src/HTML.svg" alt="html"></li>
+                          <li class="intro-li"><img src="src/CSS.svg" alt="css"></li>
+                          <li class="intro-li"><img src="src/JavaScript.svg" alt="js"></li>
+                          <li class="intro-li"><img src="src/React-Dark.svg" alt="react"></li>
+                          <li class="intro-li"><img src="src/Pug-Dark.svg" alt="pug"></li>
+                          <li class="intro-li"><img src="src/Bootstrap.svg" alt="Bootstrap"></li>
+                      </ul>
                   </div>
-                  <div class="profile">
-                    <h2 class="aboutme-title">안녕하세요. 개발을 하고 있는 김지민입니다.</h2>
-                    <ul class="aboutme-ul">
-                      <li class="aboutme"><span>학교</span><span>|</span><span>홍익대학교 컴퓨터공학과 재학</span></li>
-                      <li class="aboutme"><span>생년월일</span><span>|</span><span>2002.02.18</span></li>
-                      <li class="aboutme"><span>위치</span><span>|</span><span>서울특별시 마포구</span></li>
-                      <li class="aboutme"><span>개발</span><span>|</span><span>프론트엔드, 백엔드</span></li>
-                    </ul>
+                  <div class="intro round-box">
+                      <h2>Back-End</h2>
+                      <ul>
+                          <li class="intro-li"><img src="src/NodeJS-Dark.svg" alt="nodejs"></li>
+                          <li class="intro-li"><img src="src/ExpressJS-Dark.svg" alt="ExpressJS"></li>
+                          <li class="intro-li"><img src="src/Babel.svg" alt="Babel"></li>
+                          <li class="intro-li"><img src="src/GoLang.svg" alt="Go"></li>
+                          <li class="intro-li"><img src="src/Python-Dark.svg" alt="python"></li>
+                          <li class="intro-li"><img src="src/Java-Dark.svg" alt="Java"></li>
+                          <li class="intro-li"><img src="src/MySQL-Dark.svg" alt="MySQL"></li>
+                          <li class="intro-li"><img src="src/Electron.svg" alt="Electron"></li>
+                      </ul>
                   </div>
-                </div>
-                <div class="intro-wrap">    
-                    <div class="intro round-box">
-                        <h2>Front-End</h2>
-                        <ul>
-                            <li class="intro-li"><img src="src/HTML.svg" alt="html"></li>
-                            <li class="intro-li"><img src="src/CSS.svg" alt="css"></li>
-                            <li class="intro-li"><img src="src/JavaScript.svg" alt="js"></li>
-                            <li class="intro-li"><img src="src/React-Dark.svg" alt="react"></li>
-                            <li class="intro-li"><img src="src/Pug-Dark.svg" alt="pug"></li>
-                            <li class="intro-li"><img src="src/Bootstrap.svg" alt="Bootstrap"></li>
-                        </ul>
+                  <div class="intro round-box">
+                      <h2>ETC</h2>
+                      <ul>
+                          <li class="intro-li"><img src="src/Git.svg" alt="Git"></li>
+                          <li class="intro-li"><img src="src/githubicon.png" alt="Github"></li>
+                          <li class="intro-li"><img src="src/AWS-Dark.svg" alt="AWS"></li>
+                          <li class="intro-li"><img src="src/Kubernetes.svg" alt="Kubernetes"></li>
+                          <li class="intro-li"><img src="src/VSCode-Dark.svg" alt="VSCode"></li>
+                          <li class="intro-li"><img src="src/Markdown-Dark.svg" alt="md"></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>     
+      </section>
+      <section class="project-section">
+          <h1 class="titles">프로젝트</h1>
+          <div class="round-box">
+              <div class="project round-box first-project">
+                  <h2>포트폴리오 페이지</h2>
+                  <h4>2024.09 ~</h4>
+                  <div class="project-intro">
+                    <div style="width: 500px; height: 100px;"></div>
+                    <div>
+                      <div class="project-intro-li">사용 스택 : HTML, CSS, JS</div>
+                      <div class="project-intro-li" onclick="location.href='https://github.com/nowimseeingcashflow/nowimseeingcashflow.github.io';">바로가기</div>
                     </div>
-                    <div class="intro round-box">
-                        <h2>Back-End</h2>
-                        <ul>
-                            <li class="intro-li"><img src="src/NodeJS-Dark.svg" alt="nodejs"></li>
-                            <li class="intro-li"><img src="src/ExpressJS-Dark.svg" alt="ExpressJS"></li>
-                            <li class="intro-li"><img src="src/Babel.svg" alt="Babel"></li>
-                            <li class="intro-li"><img src="src/GoLang.svg" alt="Go"></li>
-                            <li class="intro-li"><img src="src/Python-Dark.svg" alt="python"></li>
-                            <li class="intro-li"><img src="src/Java-Dark.svg" alt="Java"></li>
-                            <li class="intro-li"><img src="src/MySQL-Dark.svg" alt="MySQL"></li>
-                            <li class="intro-li"><img src="src/Electron.svg" alt="Electron"></li>
-                        </ul>
+                  </div>
+                  
+              </div>
+              <div class="project round-box">
+                  <h2>SYNERGY</h2>
+                  <h4>2024.12 ~</h4>
+                  <div class="project-intro">
+                    <img src="src/SYNERGY.png" alt="SYNERGY 프로젝트 이미지">
+                    <div>
+                      <div style="font-size: 18px; margin-bottom: 30px; margin-left: 30px;">
+                        SYNERGY는 생성형 AI 초심자를 위하여 만들어진 여러 생성형 AI 도구를 손쉽게 사용할 수 있는 통합 플랫폼입니다.<br/>
+                        사용자의 목표와 필요에 따라 최적화된 맞춤형 AI 로드맵을 생성해주고 로드맵 단계에 따라 필요한 생성형 AI의 종류와 사용 방안을 제시하며,
+                        워크스페이스를 제공하여 각 단계에서 최적의 결과를 만들어냅니다.
+                      </div>
+                      <div class="project-intro-li">사용 스택 : Next.js, TypeScript, Python</div>
+                      <div class="project-intro-li" onclick="location.href='http://synergy.o-r.kr';">바로가기</div>
                     </div>
-                    <div class="intro round-box">
-                        <h2>ETC</h2>
-                        <ul>
-                            <li class="intro-li"><img src="src/Git.svg" alt="Git"></li>
-                            <li class="intro-li"><img src="src/githubicon.png" alt="Github"></li>
-                            <li class="intro-li"><img src="src/AWS-Dark.svg" alt="AWS"></li>
-                            <li class="intro-li"><img src="src/Kubernetes.svg" alt="Kubernetes"></li>
-                            <li class="intro-li"><img src="src/VSCode-Dark.svg" alt="VSCode"></li>
-                            <li class="intro-li"><img src="src/Markdown-Dark.svg" alt="md"></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>     
-        </section>
-        <section class="project-section">
-            <h1 class="titles">프로젝트</h1>
-            <div class="round-box">
-                <div class="project round-box first-project">
-                    <h2>포트폴리오 페이지</h2>
-                    <h4>2024.09 ~</h4>
-                </div>
-                <div class="project round-box">
-                    <h2>Coming Soon...</h2>
-                    <h4>2024.10 ~</h4>
-                </div>
-            </div>
-        </section>
-    </main>
-<footer class="footer" id="footer">
-  <div class="social">
-    <a href="https://github.com/nowimseeingcashflow" style="margin-right:10px;"><img src="src/githubicon2.png" alt="" height="30px" width="30px"></a>
-    <a href="https://instagram.com/gemini.aqr" style="margin-right:10px; padding-top: 1px;"><img src="src/instaicon.png" alt="" height="30px" width="30px"></a>
-    <a href="https://jimmin.tistory.com/"><img src="src/tistory.png" alt="" height="36px" width="36px"></a>
-  </div>
-  <div class="text">
-    Contact |  010-9907-6496
-  </div>
-  <div class="text copyright">
-    2024 김지민. All rights reserved.
-  </div>
-</footer>
+                  </div>
+              </div>
+          </div>
+      </section>
+  </main>
+  <footer class="footer" id="footer">
+    <div class="social">
+      <a href="https://github.com/nowimseeingcashflow" style="margin-right:10px;"><img src="src/githubicon2.png" alt="" height="30px" width="30px"></a>
+      <a href="https://instagram.com/gemini.aqr" style="margin-right:10px; padding-top: 1px;"><img src="src/instaicon.png" alt="" height="30px" width="30px"></a>
+      <a href="https://jimmin.tistory.com/"><img src="src/tistory.png" alt="" height="36px" width="36px"></a>
+    </div>
+    <div class="text">
+      Contact |  010-9907-6496
+    </div>
+    <div class="text copyright">
+      2024 김지민. All rights reserved.
+    </div>
+  </footer>
 </body>
 <script>
     const swiper = new Swiper('.swiper', {
