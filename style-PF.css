@@ -357,6 +357,7 @@ h1, h2, h3, h4{
   transition: transform 0.3s ease;
   white-space: nowrap;
   max-height: 50px;
+  cursor: pointer;
 }
 
 .project-intro-li:hover {
