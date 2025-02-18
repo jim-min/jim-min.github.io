@@ -43,6 +43,11 @@ h1, h2, h3, h4{
   margin: auto;
 }
 
+.titles {
+  font-size: 60px;
+  margin: 50px 0;
+}
+
 .menu,
 .logo,
 .search,
@@ -184,15 +189,25 @@ h1, h2, h3, h4{
   border-color: rgba(169, 169, 169, 0.216);
   border-style: solid;
   padding: 15px;
+  overflow: hidden;
 }
+.introduce-section {
+  overflow: hidden;
+  width: 100%;
+}
+
 .profile-wrap{
   box-sizing: border-box;
   display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 .profile{
   flex: 1;
-  margin: 0.75%;
+  min-width: 300px;
   box-sizing: border-box;
+  margin: 0.75%;
+  margin-bottom: 50px;
 }
 .aboutme-title{
   box-sizing: border-box;
@@ -201,32 +216,39 @@ h1, h2, h3, h4{
 .aboutme-ul {
   display: flex;
   flex-direction: column;
-  padding: 20px; /* Remove default padding */
-  margin: 0; /* Remove default margin */
-  justify-content: space-between;
+  padding: 20px;
   height: 280px; 
   box-sizing: border-box;
 }
 .aboutme {
-  list-style-type: none; /* Remove bullet points */
-  margin-bottom: 10px; /* Adjust this value to set the space between items */
+  list-style-type: none;
+  margin-bottom: 10px;
   padding: 15px;
   font-size: 20px;
-  background-color: #ccc; /* Replace with your desired background color */
-  border-radius: 15px; /* This makes the background perfectly round */
-  height: 200px; /* Make sure the height is the same as the width for a perfect circle */
-  display: flex; /* This helps center the content inside */
-  justify-content: space-between;
+  background-color: #ccc;
+  border-radius: 15px;
+  display: flex;
   align-items: center;
-  overflow: hidden;
   transition: transform 0.3s ease;
+  white-space: nowrap;
+  max-height: 50px;
+}
+
+.aboutme > span:first-child {
+  min-width: 80px;
+}
+
+.aboutme > span:nth-child(2) {
+  margin: 0 50px;
+}
+
+.aboutme > span:last-child {
+  white-space: normal;
+  flex: 1;
+  text-align: right;
 }
 .aboutme:hover {
   transform: scale(1.03); /* Slightly enlarges on hover */
-}
-#aboutme-left {
-  /* text-align: left; */
-  margin-right: 10px; /* Adjust as needed */
 }
 /* Remove margin from the last item to avoid extra space at the bottom */
 .aboutme:last-child {
@@ -245,12 +267,13 @@ h1, h2, h3, h4{
 .social{
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 5px;
+  height: 50px;
 }
 
 .intro-li:hover {
   transform: scale(1.15);
+  transform-origin: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
