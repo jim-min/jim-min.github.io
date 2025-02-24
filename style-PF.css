@@ -198,9 +198,15 @@ h1, h2, h3, h4{
   padding: 15px;
   overflow: hidden;
 }
-.introduce-section {
-  overflow: hidden;
-  width: 100%;
+.introduce-section, .project-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.introduce-section.show, .project-section.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .profile-wrap{
@@ -389,7 +395,7 @@ h1, h2, h3, h4{
 }
 
 /* Media Queries - Always at the end of the file */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1420px) {
   .aboutme {
     font-size: 16px !important;
     padding: 10px;
