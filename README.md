@@ -1,1 +1,2 @@
-jim-min.github.io
+Mini-Blog [jim-min.github.io
+](https://jim-min.github.io)
