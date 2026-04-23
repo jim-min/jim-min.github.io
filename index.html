@@ -1,397 +1,495 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio of KJM</title>
-    <link rel="stylesheet" href="style-PF.css">
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-  />
-  
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance I Summary</title>
+
+    <!-- Fonts: Manrope from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (ELECTRIC STUDIO)
+           =========================================== */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-white: #ffffff;
+            --accent-blue: #4361ee;
+            --text-dark: #0a0a0a;
+            --text-light: #ffffff;
+
+            --font-display: 'Manrope', sans-serif;
+            --font-body: 'Manrope', sans-serif;
+            
+            --title-size: clamp(2rem, 6vw, 4.5rem);
+            --h2-size: clamp(1.5rem, 4vw, 3rem);
+            --body-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --content-gap: clamp(1rem, 3vw, 2.5rem);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-normal: 0.8s;
+        }
+
+        /* ===========================================
+           VIEWPORT FITTING: MANDATORY BASE STYLES
+           =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; overflow: hidden; font-family: var(--font-body); background: var(--bg-dark); color: var(--text-light); }
+        
+        .slides-container {
+            height: 100vh;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: var(--bg-dark);
+        }
+
+        .slide.light {
+            background: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            padding: var(--slide-padding);
+            gap: var(--content-gap);
+            z-index: 2;
+        }
+
+        /* Split Panel Layout (Electric Studio Signature) */
+        .split-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: var(--bg-white);
+            z-index: 1;
+            transition: height 0.8s var(--ease-out-expo);
+        }
+
+        .slide.dark .split-panel { height: 0; }
+
+        /* Typography */
+        h1 { font-family: var(--font-display); font-weight: 800; font-size: var(--title-size); line-height: 1.1; margin-bottom: 0.5rem; }
+        h2 { font-family: var(--font-display); font-weight: 800; font-size: var(--h2-size); line-height: 1.2; border-left: 6px solid var(--accent-blue); padding-left: 1.5rem; }
+        p, li { font-size: var(--body-size); line-height: 1.6; }
+        ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+        li::before { content: "—"; color: var(--accent-blue); margin-right: 0.8rem; font-weight: 800; }
+
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all var(--duration-normal) var(--ease-out-expo); }
+        .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* UI Elements */
+        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--accent-blue); width: 0; z-index: 1000; transition: width 0.3s ease; }
+        .nav-dots { position: fixed; right: 2rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 1rem; z-index: 1000; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; transition: all 0.3s ease; }
+        .dot.active { background: var(--accent-blue); transform: scale(1.5); }
+        .light .dot { background: rgba(0, 0, 0, 0.2); }
+        .light .dot.active { background: var(--accent-blue); }
+
+        /* Images */
+        .img-container { width: 100%; display: flex; justify-content: center; align-items: center; }
+        img { max-height: min(50vh, 400px); max-width: 90%; object-fit: contain; border-radius: 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+
+        /* Grid for cards */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+        @media (max-width: 900px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            img { max-height: 30vh; }
+        }
+    </style>
 </head>
 <body>
-  <header class="header">
-      <div class="menu">
-          <a href="#none"><img id="gnb-opener" src="src/menu-icon.png" alt="메뉴 열기" width="30px" height="30px"></a>
-          <nav class="gnb-menu">
-              <ul class="">
-                  <li class="gnb-column">
-                      <ul>
-                          <li class="menu-box menu-top"><a href="#top">Home</a></li>
-                      </ul>
-                  </li>
-                  <li class="gnb-column">
-                      <ul>
-                          <li class="menu-box menu-top"><a href="#">개발</a></li>
-                          <li class="menu-box"><a href="/">공부</a></li>
-                          <li class="menu-box"><a href="/">프로젝트</a></li>
-                          <li class="menu-box"><a href="/">과제</a></li>
-                          <li class="menu-box"><a href="/">ETC</a></li>
-                      </ul>
-                  </li>
-                  <li class="gnb-column">
-                      <ul>
-                          <li class="menu-box menu-top"><a href="#">사진첩</a></li>
-                          <li class="menu-box"><a href="/">옛날 사진</a></li>
-                          <li class="menu-box"><a href="/">최근 사진</a></li>
-                      </ul>
-                  </li>
-                  <li class="gnb-column">
-                      <ul>
-                          <li class="menu-box menu-top"><a href="#none">About</a></li>
-                          <li class="menu-box"><a href="#introduce-section">자기소개</a></li>
-                          <li class="menu-box"><a href="#footer">Contact</a></li>
-                      </ul>
-                  </li>
-              </ul>
-          </nav>
-      </div>
-      <div class="logo">
-          <a href="/"><img src="src/logo.png" alt="JM"></a>
-      </div>
-      <div class="search">
-          <a href="#none"><img id="search-opener" src="src/search-icon.png" alt="검색"></a>
-          <form action="" class="search-form">
-              <input type="text" id="search">
-              <button id="search-button" type="submit">
-                  <img src="src/search-icon.png" alt="Search">
-                </button>
-          </form>
-      </div>
-  </header>
-  <main class="main">
-      <section class="swiper-section">
-          <div class="swiper">
-              <div class="swiper-wrapper">
-                  <div class="swiper-slide"><a href="/">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                          <rect width="1600" height="900" fill="#2c3e50"/>
-                          <text x="800" y="450" font-size="100" fill="white" text-anchor="middle" dominant-baseline="middle">환영합니다!</text>
-                          <g transform="translate(700,600)">
-                            <path d="M50,0 A50,50 0 1,1 50,1 z" fill="yellow"/>
-                            <circle cx="30" cy="30" r="5" fill="black"/>
-                            <circle cx="70" cy="30" r="5" fill="black"/>
-                            <path d="M30,60 Q50,80 70,60" stroke="black" stroke-width="3" fill="none"/>
-                          </g>
-                        </svg>
-                  </a></div>
-                  <div class="swiper-slide"><a href="/">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                          <!-- 배경 -->
-                          <rect width="1600" height="900" fill="#2c3e50"/>
-                          
-                          <!-- 중앙 컨테이너 -->
-                          <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
-                          
-                          <!-- 메인 텍스트 -->
-                          <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
-                          
-                          <!-- 작은 설명 텍스트 -->
-                          <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
-                          
-                          <!-- 기어 아이콘 -->
-                          <g transform="translate(700,320) rotate(0)">
-                            <animateTransform
-                              attributeName="transform"
-                              attributeType="XML"
-                              type="rotate"
-                              from="0 800 320"
-                              to="360 800 320"
-                              dur="10s"
-                              repeatCount="indefinite"/>
-                            <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
-                                  stroke="#3498db" 
-                                  stroke-width="8" 
-                                  fill="none"/>
-                          </g>
-                          
-                          <!-- 작은 점 애니메이션 -->
-                          <g transform="translate(800,600)">
-                            <circle cx="-40" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
-                            </circle>
-                            <circle cx="0" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                            </circle>
-                            <circle cx="40" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                            </circle>
-                          </g>
-                        </svg>
-                  </a></div>
-                  <div class="swiper-slide"><a href="/">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                          <!-- 배경 -->
-                          <rect width="1600" height="900" fill="#2c3e50"/>
-                          
-                          <!-- 중앙 컨테이너 -->
-                          <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
-                          
-                          <!-- 메인 텍스트 -->
-                          <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
-                          
-                          <!-- 작은 설명 텍스트 -->
-                          <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
-                          
-                          <!-- 기어 아이콘 -->
-                          <g transform="translate(700,320) rotate(0)">
-                            <animateTransform
-                              attributeName="transform"
-                              attributeType="XML"
-                              type="rotate"
-                              from="0 800 320"
-                              to="360 800 320"
-                              dur="10s"
-                              repeatCount="indefinite"/>
-                            <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
-                                  stroke="#3498db" 
-                                  stroke-width="8" 
-                                  fill="none"/>
-                          </g>
-                          
-                          <!-- 작은 점 애니메이션 -->
-                          <g transform="translate(800,600)">
-                            <circle cx="-40" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
-                            </circle>
-                            <circle cx="0" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                            </circle>
-                            <circle cx="40" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                            </circle>
-                          </g>
-                        </svg>
-                  </a></div>
-                  <div class="swiper-slide"><a href="/">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                          <!-- 배경 -->
-                          <rect width="1600" height="900" fill="#2c3e50"/>
-                          
-                          <!-- 중앙 컨테이너 -->
-                          <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
-                          
-                          <!-- 메인 텍스트 -->
-                          <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
-                          
-                          <!-- 작은 설명 텍스트 -->
-                          <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
-                          
-                          <!-- 기어 아이콘 -->
-                          <g transform="translate(700,320) rotate(0)">
-                            <animateTransform
-                              attributeName="transform"
-                              attributeType="XML"
-                              type="rotate"
-                              from="0 800 320"
-                              to="360 800 320"
-                              dur="10s"
-                              repeatCount="indefinite"/>
-                            <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
-                                  stroke="#3498db" 
-                                  stroke-width="8" 
-                                  fill="none"/>
-                          </g>
-                          
-                          <!-- 작은 점 애니메이션 -->
-                          <g transform="translate(800,600)">
-                            <circle cx="-40" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
-                            </circle>
-                            <circle cx="0" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                            </circle>
-                            <circle cx="40" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                            </circle>
-                          </g>
-                        </svg>
-                  </a></div>
-                  <div class="swiper-slide"><a href="/">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-                          <!-- 배경 -->
-                          <rect width="1600" height="900" fill="#2c3e50"/>
-                          
-                          <!-- 중앙 컨테이너 -->
-                          <rect x="400" y="250" width="800" height="400" fill="#34495e" rx="20"/>
-                          
-                          <!-- 메인 텍스트 -->
-                          <text x="800" y="400" font-size="80" fill="white" text-anchor="middle">추가 예정</text>
-                          
-                          <!-- 작은 설명 텍스트 -->
-                          <text x="800" y="500" font-size="40" fill="#bdc3c7" text-anchor="middle">곧 새로운 콘텐츠가 추가됩니다</text>
-                          
-                          <!-- 기어 아이콘 -->
-                          <g transform="translate(700,320) rotate(0)">
-                            <animateTransform
-                              attributeName="transform"
-                              attributeType="XML"
-                              type="rotate"
-                              from="0 800 320"
-                              to="360 800 320"
-                              dur="10s"
-                              repeatCount="indefinite"/>
-                            <path d="M35,0 A35,35 0 1,1 35,0.1 M0,35 A35,35 0 0,0 70,35 M35,70 A35,35 0 1,0 35,69.9" 
-                                  stroke="#3498db" 
-                                  stroke-width="8" 
-                                  fill="none"/>
-                          </g>
-                          
-                          <!-- 작은 점 애니메이션 -->
-                          <g transform="translate(800,600)">
-                            <circle cx="-40" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s"/>
-                            </circle>
-                            <circle cx="0" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
-                            </circle>
-                            <circle cx="40" cy="0" r="10" fill="#e74c3c">
-                              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                            </circle>
-                          </g>
-                        </svg>
-                  </a></div>
-                  <div class="swiper-pagination"></div>
+    <div class="progress-bar"></div>
+    <nav class="nav-dots"></nav>
 
-                  <!-- If we need navigation buttons -->
-                  <div class="swiper-button-prev"></div>
-                  <div class="swiper-button-next"></div>
-              </div>
-          </div>
-      </section>
-      <section class="introduce-section" id="introduce-section">
-          <h1 class="titles">자기소개</h1>
-          <div class="round-box">
-              <div class="profile-wrap">
-                <div class="profile">
-                  <img src="src/happy-happy-happy-cat.gif" alt="">
-                </div>
-                <div class="profile">
-                  <h2 class="aboutme-title">안녕하세요. 개발을 하고 있는 김지민입니다.</h2>
-                  <ul class="aboutme-ul">
-                    <li class="aboutme"><span>학교</span><span>|</span><span>홍익대학교 컴퓨터공학과 재학</span></li>
-                    <li class="aboutme"><span>생년월일</span><span>|</span><span>2002.02.18</span></li>
-                    <li class="aboutme"><span>위치</span><span>|</span><span>서울특별시 마포구</span></li>
-                    <li class="aboutme"><span>개발</span><span>|</span><span>프론트엔드, 백엔드</span></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="intro-wrap">    
-                  <div class="intro round-box">
-                      <h2>Front-End</h2>
-                      <ul>
-                          <li class="intro-li"><img src="src/HTML.svg" alt="html"></li>
-                          <li class="intro-li"><img src="src/CSS.svg" alt="css"></li>
-                          <li class="intro-li"><img src="src/JavaScript.svg" alt="js"></li>
-                          <li class="intro-li"><img src="src/React-Dark.svg" alt="react"></li>
-                          <li class="intro-li"><img src="src/Pug-Dark.svg" alt="pug"></li>
-                          <li class="intro-li"><img src="src/Bootstrap.svg" alt="Bootstrap"></li>
-                      </ul>
-                  </div>
-                  <div class="intro round-box">
-                      <h2>Back-End</h2>
-                      <ul>
-                          <li class="intro-li"><img src="src/NodeJS-Dark.svg" alt="nodejs"></li>
-                          <li class="intro-li"><img src="src/ExpressJS-Dark.svg" alt="ExpressJS"></li>
-                          <li class="intro-li"><img src="src/Babel.svg" alt="Babel"></li>
-                          <li class="intro-li"><img src="src/GoLang.svg" alt="Go"></li>
-                          <li class="intro-li"><img src="src/Python-Dark.svg" alt="python"></li>
-                          <li class="intro-li"><img src="src/Java-Dark.svg" alt="Java"></li>
-                          <li class="intro-li"><img src="src/MySQL-Dark.svg" alt="MySQL"></li>
-                          <li class="intro-li"><img src="src/Electron.svg" alt="Electron"></li>
-                      </ul>
-                  </div>
-                  <div class="intro round-box">
-                      <h2>ETC</h2>
-                      <ul>
-                          <li class="intro-li"><img src="src/Git.svg" alt="Git"></li>
-                          <li class="intro-li"><img src="src/githubicon.png" alt="Github"></li>
-                          <li class="intro-li"><img src="src/AWS-Dark.svg" alt="AWS"></li>
-                          <li class="intro-li"><img src="src/Kubernetes.svg" alt="Kubernetes"></li>
-                          <li class="intro-li"><img src="src/VSCode-Dark.svg" alt="VSCode"></li>
-                          <li class="intro-li"><img src="src/Markdown-Dark.svg" alt="md"></li>
-                      </ul>
-                  </div>
-              </div>
-          </div>     
-      </section>
-      <section class="project-section" id="project-section">
-          <h1 class="titles">프로젝트</h1>
-          <div class="round-box">
-              <div class="project round-box first-project">
-                  <h2>포트폴리오 페이지</h2>
-                  <h4>2024.09 ~</h4>
-                  <div class="project-intro">
-                    <div style="width: 500px; height: 100px;"></div>
+    <div class="slides-container">
+        <!-- Slide 1: Title -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <p class="reveal text-accent" style="color: var(--accent-blue); font-weight: 800; letter-spacing: 0.1em;">CORPORATE FINANCE</p>
+                <h1 class="reveal reveal-delay-1">Finance I Summary</h1>
+                <p class="reveal reveal-delay-2">Chapters 1 — 6 Overview</p>
+            </div>
+        </section>
+
+        <!-- Slide 2: Chap 1 Overview -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">Chap 1. Overview</h2>
+                <ul class="reveal reveal-delay-1">
+                    <li><strong>Capital Budgeting:</strong> 기업의 장기 자금 운용 및 현금 흐름 창출</li>
+                    <li><strong>Capital Structure:</strong> 자기자본(Equity)과 타인자본(Debt)의 비중 조절</li>
+                    <li><strong>Working Capital Management:</strong> 단기 자산(현금, 재고) 운용 및 관리</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 3: Company Structure -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Business Organization</h2>
+                <div class="grid-2 reveal reveal-delay-1">
                     <div>
-                      <div class="project-intro-li">사용 스택 : HTML, CSS, JS</div>
-                      <div class="project-intro-li" onclick="location.href='https://github.com/nowimseeingcashflow/nowimseeingcashflow.github.io';">바로가기</div>
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Proprietorship & Partnership</h3>
+                        <p style="font-size: 0.9rem;">개인기업 및 파트너쉽. 무한책임(Unlimited Liability), 소유권 이전의 어려움.</p>
                     </div>
-                  </div>
-                  
-              </div>
-              <div class="project round-box">
-                  <h2>SYNERGY</h2>
-                  <h4>2024.12 ~</h4>
-                  <div class="project-intro">
-                    <img src="src/Synergy.png" alt="SYNERGY 프로젝트 이미지">
                     <div>
-                      <div style="font-size: 18px; margin-bottom: 30px; margin-left: 30px;">
-                        SYNERGY는 생성형 AI 초심자를 위하여 만들어진 여러 생성형 AI 도구를 손쉽게 사용할 수 있는 통합 플랫폼입니다.<br/>
-                        사용자의 목표와 필요에 따라 최적화된 맞춤형 AI 로드맵을 생성해주고 로드맵 단계에 따라 필요한 생성형 AI의 종류와 사용 방안을 제시하며,
-                        워크스페이스를 제공하여 각 단계에서 최적의 결과를 만들어냅니다.
-                      </div>
-                      <div class="project-intro-li">사용 스택 : Next.js, TypeScript, Python, AWS EC2</div>
-                      <div class="project-intro-li" onclick="location.href='http://synergy.o-r.kr';">바로가기</div>
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Corporation</h3>
+                        <p style="font-size: 0.9rem;">법인(Legal Person). 주식 발행, 유한책임(Limited Liability), 이중과세(Double Taxation).</p>
                     </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-  </main>
-  <footer class="footer" id="footer">
-    <div class="social">
-      <a href="https://github.com/nowimseeingcashflow" style="margin-right:10px;"><img src="src/githubicon2.png" alt="" height="30px" width="30px"></a>
-      <a href="https://instagram.com/gemini.aqr" style="margin-right:10px; padding-top: 1px;"><img src="src/instaicon.png" alt="" height="30px" width="30px"></a>
-      <a href="https://jimmin.tistory.com/"><img src="src/tistory.png" alt="" height="36px" width="36px"></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Agency Problem -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">The Agency Problem</h2>
+                <ul class="reveal reveal-delay-1">
+                    <li><strong>Principal vs Agent:</strong> 주주(소유자)와 경영진 간의 이해 상충</li>
+                    <li><strong>Goal:</strong> 지분의 시장 가치(Market Value) 극대화</li>
+                    <li><strong>Solutions:</strong> 스톡옵션 등 인센티브 제공, 주주권 행사를 통한 경영진 감시</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 5: Chap 2 Balance Sheet -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Chap 2. Balance Sheet</h2>
+                <p class="reveal reveal-delay-1">회사의 특정 시점 재무 상태를 나타내는 지표</p>
+                <div class="grid-2 reveal reveal-delay-2">
+                    <ul style="font-size: 0.9rem;">
+                        <li><strong>Assets:</strong> Current (1년 내 현금화) & Fixed (유형/무형)</li>
+                        <li><strong>Liabilities:</strong> Current (< 1년) & Long-term</li>
+                    </ul>
+                    <ul style="font-size: 0.9rem;">
+                        <li><strong>Equity:</strong> Assets - Liabilities</li>
+                        <li><strong>NWC:</strong> Current Assets - Current Liabilities</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Liquidity & Leverage -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">Liquidity & Leverage</h2>
+                <ul class="reveal reveal-delay-1">
+                    <li><strong>Liquidity:</strong> 자산을 가치 손실 없이 현금화할 수 있는 정도</li>
+                    <li><strong>Market vs Book Value:</strong> 장부가치는 역사적 원가, 시장가치는 현재의 실제 가치</li>
+                    <li><strong>Financial Leverage:</strong> 부채 사용 비율. 리스크와 기대 수익을 동시에 높임</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 7: Income Statement -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Income Statement</h2>
+                <p class="reveal reveal-delay-1" style="font-family: monospace; background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                    Sales - Costs - Depreciation = EBIT <br>
+                    EBIT - Interest - Taxes = Net Income
+                </p>
+                <ul class="reveal reveal-delay-2">
+                    <li><strong>Depreciation:</strong> 비현금성 비용 (현금 흐름 계산 시 환원 필요)</li>
+                    <li><strong>Taxes:</strong> Marginal(한계세율) vs Average(평균세율)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 8: Cash Flow Equation -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">Cash Flow Identity</h2>
+                <p class="reveal reveal-delay-1" style="font-size: 1.5rem; font-weight: 800; text-align: center;">CF from Assets = CF to Creditors + CF to Stockholders</p>
+                <ul class="reveal reveal-delay-2">
+                    <li><strong>OCF:</strong> EBIT + Depreciation - Taxes</li>
+                    <li><strong>NCS (CAPEX):</strong> Ending Net FA - Beginning Net FA + Dep</li>
+                    <li><strong>Change in NWC:</strong> Ending NWC - Beginning NWC</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 9: Chap 3 Ratios -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Chap 3. Financial Ratios</h2>
+                <div class="img-container reveal reveal-delay-1">
+                    <img src="image.png" alt="Liquidity Ratios">
+                </div>
+                <p class="reveal reveal-delay-2" style="text-align: center;">단기지급능력 및 유동성 척도</p>
+            </div>
+        </section>
+
+        <!-- Slide 10: Leverage Ratios -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">Long-term Solvency</h2>
+                <div class="img-container reveal reveal-delay-1">
+                    <img src="image 1.png" alt="Leverage Ratios">
+                </div>
+                <p class="reveal reveal-delay-2" style="text-align: center;">재무레버리지 및 장기 부채 상환 능력</p>
+            </div>
+        </section>
+
+        <!-- Slide 11: Asset Management -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Asset Management</h2>
+                <div class="img-container reveal reveal-delay-1">
+                    <img src="image 2.png" alt="Turnover Ratios">
+                </div>
+                <p class="reveal reveal-delay-2" style="text-align: center;">자산관리 효율성 (Turnover)</p>
+            </div>
+        </section>
+
+        <!-- Slide 12: Profitability -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">Profitability Ratios</h2>
+                <div class="img-container reveal reveal-delay-1">
+                    <img src="image 3.png" alt="Profitability Ratios">
+                </div>
+                <p class="reveal reveal-delay-2" style="text-align: center;">수익성 지표 (Margin, ROA, ROE)</p>
+            </div>
+        </section>
+
+        <!-- Slide 13: Market Ratios -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Market Value Ratios</h2>
+                <div class="img-container reveal reveal-delay-1">
+                    <img src="image 4.png" alt="Market Ratios">
+                </div>
+                <p class="reveal reveal-delay-2" style="text-align: center;">시장 평가 지표 (PER, PSR, PBR)</p>
+            </div>
+        </section>
+
+        <!-- Slide 14: DuPont Identity -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">DuPont Identity</h2>
+                <p class="reveal reveal-delay-1" style="font-size: 1.2rem; font-weight: 800; text-align: center; color: var(--accent-blue);">ROE = Profit Margin × Total Asset Turnover × Equity Multiplier</p>
+                <ul class="reveal reveal-delay-2">
+                    <li>운영 효율성 (Profit Margin)</li>
+                    <li>자산 활용 효율성 (Total Asset Turnover)</li>
+                    <li>재무 레버리지 (Equity Multiplier)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 15: Chap 4 Planning -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Chap 4. Financial Planning</h2>
+                <ul class="reveal reveal-delay-1">
+                    <li><strong>Sales Forecast:</strong> 미래 매출 예측 (모든 계획의 시작)</li>
+                    <li><strong>Pro Forma Statements:</strong> 추정 재무제표 작성</li>
+                    <li><strong>EFN (External Financing Needed):</strong> 필요한 외부 조달 자금</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Slide 16: Growth Rates -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">Internal & Sustainable Growth</h2>
+                <div class="grid-2 reveal reveal-delay-1">
+                    <div>
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Internal Growth Rate</h3>
+                        <p style="font-size: 0.9rem;">외부 자금 조달 없이 내부 유보 이익만으로 가능한 최대 성장률</p>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Sustainable Growth Rate</h3>
+                        <p style="font-size: 0.9rem;">부채 비율을 유지하면서 자기자본만으로 가능한 최대 성장률</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 17: Chap 5 Time Value -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Chap 5. Time Value of Money</h2>
+                <p class="reveal reveal-delay-1">화폐의 시간 가치: 오늘의 1원은 내일의 1원보다 가치 있다.</p>
+                <div class="grid-2 reveal reveal-delay-2">
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px;">
+                        <h3 style="color: var(--accent-blue);">Future Value</h3>
+                        <p>FV = PV × (1 + r)<sup>t</sup></p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px;">
+                        <h3 style="color: var(--accent-blue);">Present Value</h3>
+                        <p>PV = FV / (1 + r)<sup>t</sup></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 18: Chap 6 DCF -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">Chap 6. DCF Valuation</h2>
+                <p class="reveal reveal-delay-1">복수 현금 흐름의 현재 가치 및 미래 가치 계산</p>
+                <div class="img-container reveal reveal-delay-2">
+                    <img src="image 5.png" alt="Multiple Cash Flows">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 19: Annuities -->
+        <section class="slide dark">
+            <div class="slide-content">
+                <h2 class="reveal">Annuities & Perpetuities</h2>
+                <ul class="reveal reveal-delay-1">
+                    <li><strong>Annuity (연금):</strong> 일정 기간 동안 동일한 금액 수령/지급</li>
+                    <li><strong>Perpetuity (영구연금):</strong> 영구히 동일한 금액 수령 (PV = C / r)</li>
+                    <li><strong>Preferred Stock:</strong> 영구연금의 대표적인 사례</li>
+                </ul>
+                <div class="img-container reveal reveal-delay-2">
+                    <img src="image 7.png" alt="Annuity PV">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 20: EAR vs APR -->
+        <section class="slide light">
+            <div class="split-panel"></div>
+            <div class="slide-content">
+                <h2 class="reveal">EAR vs APR</h2>
+                <ul class="reveal reveal-delay-1">
+                    <li><strong>APR:</strong> 명목 연간 수익률 (표기용)</li>
+                    <li><strong>EAR:</strong> 실질 연간 수익률 (복리 고려)</li>
+                    <li style="font-family: monospace;">EAR = (1 + APR/m)<sup>m</sup> - 1</li>
+                </ul>
+                <p class="reveal reveal-delay-2" style="font-size: 0.9rem; color: #666;">이자 지급 주기가 짧을수록 실질 수익률(EAR)은 높아짐</p>
+            </div>
+        </section>
+
+        <!-- Slide 21: Conclusion -->
+        <section class="slide dark">
+            <div class="slide-content" style="text-align: center;">
+                <h2 class="reveal" style="border: none; padding: 0;">Summary Complete</h2>
+                <p class="reveal reveal-delay-1">Finance I - Chapters 1 to 6</p>
+                <p class="reveal reveal-delay-2" style="margin-top: 2rem; color: var(--accent-blue);">Keep Learning, Keep Investing.</p>
+            </div>
+        </section>
     </div>
-    <div class="text">
-      Contact |  jiminido1@gmail.com
-    </div>
-    <div class="text copyright">
-      2024 김지민. All rights reserved.
-    </div>
-  </footer>
+
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.container = document.querySelector('.slides-container');
+                this.slides = document.querySelectorAll('.slide');
+                this.progressBar = document.querySelector('.progress-bar');
+                this.navDotsContainer = document.querySelector('.nav-dots');
+                
+                this.setupIntersectionObserver();
+                this.setupNavDots();
+                this.setupScrollProgress();
+                this.setupKeyboardNav();
+            }
+
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            this.updateActiveDot();
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            setupNavDots() {
+                this.slides.forEach((_, i) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot');
+                    dot.addEventListener('click', () => {
+                        this.slides[i].scrollIntoView({ behavior: 'smooth' });
+                    });
+                    this.navDotsContainer.appendChild(dot);
+                });
+                this.updateActiveDot();
+            }
+
+            updateActiveDot() {
+                const scrollPos = this.container.scrollTop;
+                const windowHeight = window.innerHeight;
+                const activeIndex = Math.round(scrollPos / windowHeight);
+                
+                const dots = document.querySelectorAll('.dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === activeIndex);
+                });
+
+                // Update current slide theme for UI
+                if (this.slides[activeIndex].classList.contains('light')) {
+                    document.body.classList.add('light');
+                } else {
+                    document.body.classList.remove('light');
+                }
+            }
+
+            setupScrollProgress() {
+                this.container.addEventListener('scroll', () => {
+                    const totalHeight = this.container.scrollHeight - window.innerHeight;
+                    const progress = (this.container.scrollTop / totalHeight) * 100;
+                    this.progressBar.style.width = `${progress}%`;
+                });
+            }
+
+            setupKeyboardNav() {
+                window.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowDown' || e.key === ' ') {
+                        this.container.scrollBy(0, window.innerHeight);
+                    } else if (e.key === 'ArrowUp') {
+                        this.container.scrollBy(0, -window.innerHeight);
+                    }
+                });
+            }
+        }
+
+        new SlidePresentation();
+    </script>
 </body>
-<script>
-    const swiper = new Swiper('.swiper', {
-    loop: true,
-    slidePerView: 1,
-    rewind: true,
-    effect: 'flip',
-
-    pagination: '.swiper-pagination',
-    paginationClickable: '.swiper-pagination',  
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      
-    // Navigation arrows
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    // on:{
-    //     slideChangeTransitionEnd: customNext
-    //   },
-    speed: 500,
-});
-
-</script>
-<script src="PF.js"></script>
 </html>
