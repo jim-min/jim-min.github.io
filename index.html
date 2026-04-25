@@ -1,495 +1,404 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Finance I Summary</title>
-
-    <!-- Fonts: Manrope from Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퀀트 투자의 기초: 멀티 팩터 모델</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX for LaTeX Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 
     <style>
         /* ===========================================
-           CSS CUSTOM PROPERTIES (ELECTRIC STUDIO)
+           SWISS MODERN THEME & VARIABLES
            =========================================== */
         :root {
-            --bg-dark: #0a0a0a;
-            --bg-white: #ffffff;
-            --accent-blue: #4361ee;
-            --text-dark: #0a0a0a;
-            --text-light: #ffffff;
-
-            --font-display: 'Manrope', sans-serif;
-            --font-body: 'Manrope', sans-serif;
-            
-            --title-size: clamp(2rem, 6vw, 4.5rem);
-            --h2-size: clamp(1.5rem, 4vw, 3rem);
-            --body-size: clamp(0.9rem, 1.5vw, 1.2rem);
-            
-            --slide-padding: clamp(1.5rem, 5vw, 5rem);
-            --content-gap: clamp(1rem, 3vw, 2.5rem);
-            
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --duration-normal: 0.8s;
+            --bg: #ffffff;
+            --text: #000000;
+            --accent: #FF3300; /* Swiss Red */
+            --gray-light: #f4f4f4;
+            --gray-medium: #e0e0e0;
+            --font-display: 'Archivo', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: 0.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* ===========================================
-           VIEWPORT FITTING: MANDATORY BASE STYLES
-           =========================================== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; overflow: hidden; font-family: var(--font-body); background: var(--bg-dark); color: var(--text-light); }
         
-        .slides-container {
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow: hidden;
+            width: 100vw;
             height: 100vh;
-            overflow-y: auto;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
         }
 
+        /* Fullpage Scroll Container */
+        #app {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slides-container {
+            width: 100%;
+            height: 100%;
+            transition: transform var(--transition);
+            will-change: transform;
+        }
+
+        /* Slide Base */
         .slide {
             width: 100vw;
             height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
-            scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
             position: relative;
-            background: var(--bg-dark);
-        }
-
-        .slide.light {
-            background: var(--bg-white);
-            color: var(--text-dark);
-        }
-
-        .slide-content {
-            flex: 1;
+            padding: 5rem 8vw;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            max-height: 100%;
-            padding: var(--slide-padding);
-            gap: var(--content-gap);
-            z-index: 2;
+            justify-content: flex-start;
+            border-bottom: 1px solid var(--gray-medium);
         }
-
-        /* Split Panel Layout (Electric Studio Signature) */
-        .split-panel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: var(--bg-white);
-            z-index: 1;
-            transition: height 0.8s var(--ease-out-expo);
-        }
-
-        .slide.dark .split-panel { height: 0; }
 
         /* Typography */
-        h1 { font-family: var(--font-display); font-weight: 800; font-size: var(--title-size); line-height: 1.1; margin-bottom: 0.5rem; }
-        h2 { font-family: var(--font-display); font-weight: 800; font-size: var(--h2-size); line-height: 1.2; border-left: 6px solid var(--accent-blue); padding-left: 1.5rem; }
-        p, li { font-size: var(--body-size); line-height: 1.6; }
-        ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
-        li::before { content: "—"; color: var(--accent-blue); margin-right: 0.8rem; font-weight: 800; }
+        h1 { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem); line-height: 0.9; text-transform: uppercase; margin-bottom: 1.5rem; }
+        h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1; text-transform: uppercase; border-left: 12px solid var(--accent); padding-left: 20px; margin-bottom: 2.5rem; }
+        h3 { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent); text-transform: uppercase; }
+        p { font-size: 1.15rem; line-height: 1.6; margin-bottom: 1.2rem; color: #333; }
+        strong { font-weight: 700; color: var(--text); }
+
+        /* Layout Grids */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+        
+        /* UI Elements */
+        .info-box { background: var(--gray-light); padding: 2rem; border: 1px solid var(--gray-medium); border-radius: 4px; }
+        .accent-box { border-top: 5px solid var(--accent); background: #fff; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        /* LaTeX Formula Container */
+        .formula-container { 
+            background: var(--gray-light); 
+            padding: 1.5rem; 
+            border-radius: 4px; 
+            margin: 1.5rem 0; 
+            display: block; 
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th { text-align: left; background: var(--text); color: var(--bg); padding: 1rem; font-family: var(--font-display); text-transform: uppercase; }
+        td { padding: 1rem; border-bottom: 1px solid var(--gray-medium); font-size: 1rem; }
+
+        .faq-q { color: var(--accent); font-weight: 800; font-size: 1.25rem; margin-bottom: 0.5rem; display: block; }
+        .faq-a { font-size: 1.05rem; line-height: 1.5; margin-bottom: 1.5rem; display: block; border-left: 2px solid var(--gray-medium); padding-left: 15px; }
 
         /* Animations */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all var(--duration-normal) var(--ease-out-expo); }
-        .slide.visible .reveal { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
+        .slide .content-reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+        .slide.active .content-reveal { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+        .delay-3 { transition-delay: 0.6s; }
 
-        /* UI Elements */
-        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--accent-blue); width: 0; z-index: 1000; transition: width 0.3s ease; }
-        .nav-dots { position: fixed; right: 2rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 1rem; z-index: 1000; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; transition: all 0.3s ease; }
-        .dot.active { background: var(--accent-blue); transform: scale(1.5); }
-        .light .dot { background: rgba(0, 0, 0, 0.2); }
-        .light .dot.active { background: var(--accent-blue); }
+        /* Nav & Progress */
+        .progress-bar { position: fixed; top: 0; left: 0; height: 8px; background: var(--accent); width: 0%; z-index: 1000; transition: width 0.8s ease; }
+        .nav-dots { position: fixed; right: 2rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 100; }
+        .dot { width: 10px; height: 10px; background: #ccc; cursor: pointer; transition: 0.3s; }
+        .dot.active { background: var(--accent); width: 30px; border-radius: 5px; }
 
-        /* Images */
-        .img-container { width: 100%; display: flex; justify-content: center; align-items: center; }
-        img { max-height: min(50vh, 400px); max-width: 90%; object-fit: contain; border-radius: 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-
-        /* Grid for cards */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-
-        @media (max-width: 900px) {
-            .grid-2 { grid-template-columns: 1fr; }
-            img { max-height: 30vh; }
-        }
+        img { width: 100%; border: 1px solid var(--gray-medium); filter: grayscale(100%); transition: 0.5s; }
+        img:hover { filter: grayscale(0%); }
     </style>
 </head>
 <body>
-    <div class="progress-bar"></div>
-    <nav class="nav-dots"></nav>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="nav-dots" id="navDots"></div>
 
-    <div class="slides-container">
-        <!-- Slide 1: Title -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <p class="reveal text-accent" style="color: var(--accent-blue); font-weight: 800; letter-spacing: 0.1em;">CORPORATE FINANCE</p>
-                <h1 class="reveal reveal-delay-1">Finance I Summary</h1>
-                <p class="reveal reveal-delay-2">Chapters 1 — 6 Overview</p>
-            </div>
-        </section>
+    <div id="app">
+        <div class="slides-container" id="slidesContainer">
 
-        <!-- Slide 2: Chap 1 Overview -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">Chap 1. Overview</h2>
-                <ul class="reveal reveal-delay-1">
-                    <li><strong>Capital Budgeting:</strong> 기업의 장기 자금 운용 및 현금 흐름 창출</li>
-                    <li><strong>Capital Structure:</strong> 자기자본(Equity)과 타인자본(Debt)의 비중 조절</li>
-                    <li><strong>Working Capital Management:</strong> 단기 자산(현금, 재고) 운용 및 관리</li>
-                </ul>
-            </div>
-        </section>
+            <!-- Slide 1: Cover -->
+            <section class="slide">
+                <div style="margin-top: auto; margin-bottom: auto;">
+                    <p class="content-reveal" style="font-weight: 700; color: var(--accent);">CHAPTER 04</p>
+                    <h1 class="content-reveal delay-1">멀티 팩터 모델의 기초<br><span style="color: #999;">Intro to Multi-Factor</span></h1>
+                    <div class="content-reveal delay-2" style="width: 120px; height: 15px; background: var(--accent); margin: 2rem 0;"></div>
+                    <p class="content-reveal delay-3" style="font-size: 1.5rem;">자산 수익률의 근원을 파악하고 리스크를 정교하게 분해하는 현대 퀀트 투자의 핵심</p>
+                </div>
+            </section>
 
-        <!-- Slide 3: Company Structure -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Business Organization</h2>
-                <div class="grid-2 reveal reveal-delay-1">
+            <!-- Slide 2: CAPM to Multi-Factor -->
+            <section class="slide">
+                <h2 class="content-reveal">01. 단일 팩터에서 다중 팩터로</h2>
+                <div class="grid-2 content-reveal delay-1">
                     <div>
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Proprietorship & Partnership</h3>
-                        <p style="font-size: 0.9rem;">개인기업 및 파트너쉽. 무한책임(Unlimited Liability), 소유권 이전의 어려움.</p>
+                        <h3>베타의 진화: CAPM에서 APT로</h3>
+                        <p>알파가 회귀분석으로 설명될 수 있듯이, 베타 또한 단일 요인에서 다중 요인으로 확장되었습니다. 시장 수익률이라는 단 하나의 팩터(CAPM)를 넘어 자산의 수익률을 결정짓는 다양한 공통 요인을 식별하는 과정입니다.</p>
+                        <div class="info-box">
+                            <strong>Stephen Ross (1976):</strong> 자산 수익률이 전체 자산의 수보다 훨씬 적은 수의 공통 요인(Factors)으로 설명될 수 있다는 '차익거래 가격결정 이론(APT)'을 제시했습니다.
+                        </div>
                     </div>
                     <div>
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Corporation</h3>
-                        <p style="font-size: 0.9rem;">법인(Legal Person). 주식 발행, 유한책임(Limited Liability), 이중과세(Double Taxation).</p>
+                        <img src="image.png" alt="CAPM Graph" onerror="this.style.display='none'">
+                        <p style="font-size: 0.9rem; margin-top: 1rem; color: #666;">기존의 CAPM은 시장 베타($\beta^M$)만을 리스크의 척도로 보았으나, 실제 시장은 훨씬 더 복잡한 변수들에 의해 움직입니다.</p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Slide 4: Agency Problem -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">The Agency Problem</h2>
-                <ul class="reveal reveal-delay-1">
-                    <li><strong>Principal vs Agent:</strong> 주주(소유자)와 경영진 간의 이해 상충</li>
-                    <li><strong>Goal:</strong> 지분의 시장 가치(Market Value) 극대화</li>
-                    <li><strong>Solutions:</strong> 스톡옵션 등 인센티브 제공, 주주권 행사를 통한 경영진 감시</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Slide 5: Chap 2 Balance Sheet -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Chap 2. Balance Sheet</h2>
-                <p class="reveal reveal-delay-1">회사의 특정 시점 재무 상태를 나타내는 지표</p>
-                <div class="grid-2 reveal reveal-delay-2">
-                    <ul style="font-size: 0.9rem;">
-                        <li><strong>Assets:</strong> Current (1년 내 현금화) & Fixed (유형/무형)</li>
-                        <li><strong>Liabilities:</strong> Current (< 1년) & Long-term</li>
-                    </ul>
-                    <ul style="font-size: 0.9rem;">
-                        <li><strong>Equity:</strong> Assets - Liabilities</li>
-                        <li><strong>NWC:</strong> Current Assets - Current Liabilities</li>
-                    </ul>
+            <!-- Slide 3: Formula & Loadings -->
+            <section class="slide">
+                <h2 class="content-reveal">02. 멀티 팩터 모델의 수학적 정의</h2>
+                <div class="content-reveal delay-1">
+                    <p>자산 수익률 $r$은 각 팩터의 민감도와 팩터 수익률의 합으로 정의됩니다.</p>
+                    <div class="formula-container">
+                        $$r = \alpha + \beta^1 f_1 + \beta^2 f_2 + \dots + \beta^m f_m + \epsilon$$
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Slide 6: Liquidity & Leverage -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">Liquidity & Leverage</h2>
-                <ul class="reveal reveal-delay-1">
-                    <li><strong>Liquidity:</strong> 자산을 가치 손실 없이 현금화할 수 있는 정도</li>
-                    <li><strong>Market vs Book Value:</strong> 장부가치는 역사적 원가, 시장가치는 현재의 실제 가치</li>
-                    <li><strong>Financial Leverage:</strong> 부채 사용 비율. 리스크와 기대 수익을 동시에 높임</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Slide 7: Income Statement -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Income Statement</h2>
-                <p class="reveal reveal-delay-1" style="font-family: monospace; background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
-                    Sales - Costs - Depreciation = EBIT <br>
-                    EBIT - Interest - Taxes = Net Income
-                </p>
-                <ul class="reveal reveal-delay-2">
-                    <li><strong>Depreciation:</strong> 비현금성 비용 (현금 흐름 계산 시 환원 필요)</li>
-                    <li><strong>Taxes:</strong> Marginal(한계세율) vs Average(평균세율)</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Slide 8: Cash Flow Equation -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">Cash Flow Identity</h2>
-                <p class="reveal reveal-delay-1" style="font-size: 1.5rem; font-weight: 800; text-align: center;">CF from Assets = CF to Creditors + CF to Stockholders</p>
-                <ul class="reveal reveal-delay-2">
-                    <li><strong>OCF:</strong> EBIT + Depreciation - Taxes</li>
-                    <li><strong>NCS (CAPEX):</strong> Ending Net FA - Beginning Net FA + Dep</li>
-                    <li><strong>Change in NWC:</strong> Ending NWC - Beginning NWC</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Slide 9: Chap 3 Ratios -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Chap 3. Financial Ratios</h2>
-                <div class="img-container reveal reveal-delay-1">
-                    <img src="image.png" alt="Liquidity Ratios">
+                <div class="grid-2 content-reveal delay-2">
+                    <div class="accent-box">
+                        <h3>팩터 로딩 (Factor Loading)</h3>
+                        <p>위 식에서 $\beta$(베타)는 개별 주식이 특정 팩터에 얼마나 민감하게 반응하는지를 나타내며, 이를 <strong>'로딩(Loading)'</strong> 또는 <strong>'익스포저(Exposure)'</strong>라고 부릅니다.</p>
+                    </div>
+                    <div class="accent-box">
+                        <h3>역사적 발견</h3>
+                        <p><strong>Rolf Banz:</strong> 소형주가 대형주보다 지속적으로 높은 수익률을 보인다는 소형주 효과를 발견했습니다.</p>
+                        <p style="font-family: monospace; font-size: 0.9rem; background: #f9f9f9; padding: 0.5rem;">$r = \alpha + \beta^M r^M + \beta^{BMS} r^{BMS} + \epsilon$</p>
+                    </div>
                 </div>
-                <p class="reveal reveal-delay-2" style="text-align: center;">단기지급능력 및 유동성 척도</p>
-            </div>
-        </section>
+            </section>
 
-        <!-- Slide 10: Leverage Ratios -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">Long-term Solvency</h2>
-                <div class="img-container reveal reveal-delay-1">
-                    <img src="image 1.png" alt="Leverage Ratios">
-                </div>
-                <p class="reveal reveal-delay-2" style="text-align: center;">재무레버리지 및 장기 부채 상환 능력</p>
-            </div>
-        </section>
-
-        <!-- Slide 11: Asset Management -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Asset Management</h2>
-                <div class="img-container reveal reveal-delay-1">
-                    <img src="image 2.png" alt="Turnover Ratios">
-                </div>
-                <p class="reveal reveal-delay-2" style="text-align: center;">자산관리 효율성 (Turnover)</p>
-            </div>
-        </section>
-
-        <!-- Slide 12: Profitability -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">Profitability Ratios</h2>
-                <div class="img-container reveal reveal-delay-1">
-                    <img src="image 3.png" alt="Profitability Ratios">
-                </div>
-                <p class="reveal reveal-delay-2" style="text-align: center;">수익성 지표 (Margin, ROA, ROE)</p>
-            </div>
-        </section>
-
-        <!-- Slide 13: Market Ratios -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Market Value Ratios</h2>
-                <div class="img-container reveal reveal-delay-1">
-                    <img src="image 4.png" alt="Market Ratios">
-                </div>
-                <p class="reveal reveal-delay-2" style="text-align: center;">시장 평가 지표 (PER, PSR, PBR)</p>
-            </div>
-        </section>
-
-        <!-- Slide 14: DuPont Identity -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">DuPont Identity</h2>
-                <p class="reveal reveal-delay-1" style="font-size: 1.2rem; font-weight: 800; text-align: center; color: var(--accent-blue);">ROE = Profit Margin × Total Asset Turnover × Equity Multiplier</p>
-                <ul class="reveal reveal-delay-2">
-                    <li>운영 효율성 (Profit Margin)</li>
-                    <li>자산 활용 효율성 (Total Asset Turnover)</li>
-                    <li>재무 레버리지 (Equity Multiplier)</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Slide 15: Chap 4 Planning -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Chap 4. Financial Planning</h2>
-                <ul class="reveal reveal-delay-1">
-                    <li><strong>Sales Forecast:</strong> 미래 매출 예측 (모든 계획의 시작)</li>
-                    <li><strong>Pro Forma Statements:</strong> 추정 재무제표 작성</li>
-                    <li><strong>EFN (External Financing Needed):</strong> 필요한 외부 조달 자금</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Slide 16: Growth Rates -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">Internal & Sustainable Growth</h2>
-                <div class="grid-2 reveal reveal-delay-1">
+            <!-- Slide 4: Computational Efficiency -->
+            <section class="slide">
+                <h2 class="content-reveal">03. 컴퓨팅 혁신과 팩터 모델</h2>
+                <div class="grid-2 content-reveal delay-1">
                     <div>
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Internal Growth Rate</h3>
-                        <p style="font-size: 0.9rem;">외부 자금 조달 없이 내부 유보 이익만으로 가능한 최대 성장률</p>
+                        <h3>왜 팩터로 설명하는가?</h3>
+                        <p>1980년대 미 증시 5,000개 종목의 공분산 행렬을 직접 계산하려면 $5000^2 / 2$의 대규모 연산이 필요했습니다. 이는 당시 컴퓨팅 속도로는 상업적 이용이 거의 불가능한 수준이었습니다.</p>
+                    </div>
+                    <div class="info-box" style="background: var(--text); color: var(--bg);">
+                        <h3 style="color: var(--accent);">차원 축소 (Reduction)</h3>
+                        <p style="color: #ccc;">종목 간 상관관계를 직접 구하는 대신, 50개의 공통 팩터로 축소함으로써 연산량을 획기적으로 줄였습니다.</p>
+                        <div style="font-size: 2.2rem; font-weight: 800; text-align: center; margin: 1.5rem 0; font-family: var(--font-display);">
+                            $$5000^2 \longrightarrow 5000*50*2$$
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Methodologies Table -->
+            <section class="slide">
+                <h2 class="content-reveal">04. 팩터를 찾는 세 가지 접근법</h2>
+                <div class="content-reveal delay-1">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>접근법 (Approach)</th>
+                                <th>데이터 요구량</th>
+                                <th>성과 (Performance)</th>
+                                <th>해석력 (Interpretability)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>시계열 (Time-Series)</strong></td>
+                                <td>중간</td>
+                                <td>낮음</td>
+                                <td>중간-높음 (거시경제 지표 활용)</td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--accent);"><strong>펀더멘털 (Fundamental)</strong></td>
+                                <td>높음</td>
+                                <td>높음</td>
+                                <td>높음 (주식 고유 특성 직접 식별)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>통계적 (Statistical)</strong></td>
+                                <td>낮음</td>
+                                <td>높음</td>
+                                <td>낮음 (PCA 등 활용, 해석 난해)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 1rem;">가장 성과가 좋고 논리적 해석이 가능한 <strong>펀더멘털 모델</strong>이 현업에서 가장 널리 쓰입니다.</p>
+                </div>
+            </section>
+
+            <!-- Slide 6: FAQ Part 1 -->
+            <section class="slide">
+                <h2 class="content-reveal">05. FAQ: Risk & Factors (1-3)</h2>
+                <div class="grid-2 content-reveal delay-1">
+                    <div>
+                        <span class="faq-q">Q1. Z-스코어 팩터와 Raw 팩터 모델의 결과가 왜 같나요?</span>
+                        <span class="faq-a">$$z = \frac{x - \mu}{\sigma}$$</span>
+                        <span class="faq-a">두 모델은 선형 변환 관계에 있기 때문입니다. 평균을 빼거나 표준편차로 나누는 것은 단위만 바꿀 뿐, 통계적 결정 계수인 $R^2$ 값은 동일하게 유지됩니다.</span>
+
+                        <span class="faq-q">Q2. 로딩, 익스포저, 변동성의 단위는 무엇인가요?</span>
+                        <span class="faq-a">로딩은 단위가 없는 <strong>무차원 값</strong>입니다. 익스포저는 로딩에 포지션 금액을 곱해 통화 단위로 나타내며, 변동성 또한 금액이나 백분율로 표현됩니다.</span>
                     </div>
                     <div>
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Sustainable Growth Rate</h3>
-                        <p style="font-size: 0.9rem;">부채 비율을 유지하면서 자기자본만으로 가능한 최대 성장률</p>
+                        <span class="faq-q">Q3. 일일 변동성과 평균 절대 일일 수익률은 같나요?</span>
+                        <span class="faq-a"><strong>아닙니다.</strong> 수익률이 정규분포를 따른다면 절대 수익률은 접힌 정규분포를 따르게 됩니다. 관계식은 다음과 같습니다:<br>
+                        $$\text{평균 절대 수익률} = \sqrt{2/\pi} \times \sigma(\text{일일 변동성}) \simeq 0.8 \times \sigma $$</span>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Slide 17: Chap 5 Time Value -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Chap 5. Time Value of Money</h2>
-                <p class="reveal reveal-delay-1">화폐의 시간 가치: 오늘의 1원은 내일의 1원보다 가치 있다.</p>
-                <div class="grid-2 reveal reveal-delay-2">
-                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px;">
-                        <h3 style="color: var(--accent-blue);">Future Value</h3>
-                        <p>FV = PV × (1 + r)<sup>t</sup></p>
+            <!-- Slide 7: FAQ Part 2 -->
+            <section class="slide">
+                <h2 class="content-reveal">06. FAQ: Risk & Factors (4-7)</h2>
+                <div class="grid-2 content-reveal delay-1">
+                    <div>
+                        <span class="faq-q">Q4. 데이터를 더 쪼개면 기대수익률 추정이 더 정확해지나요?</span>
+                        <span class="faq-a">표본 수가 늘어나 추정 오차 자체는 적어 보일 수 있으나, <strong>상대적인 정확도</strong>는 변하지 않습니다. 신뢰구간의 비율이 동일하게 유지되기 때문입니다.</span>
+                        <span class="faq-a">연간 수익률을 일일 수익률로 분할해 데이터를 늘리는 상황을 예시로 들어보겠습니다.
+주식 수익률이 정규분포를 따르고 연간 기대수익률이 $\alpha$, 연간 변동성이 $\sigma$라고 하면, 1년을 n개의 구간으로 나눴을 때 각 기간의 기대 수익률은 $\frac{\alpha}{n}$이 되며 변동성은 $\frac{\sigma}{\sqrt{n}}$이 됩니다. 표본이 많아졌으니 추정 오차는 줄어들어 $\frac{\sigma}{n}$가 됩니다.
+즉 기대수익률의 95% 신뢰구간은 $\frac{1}{n}(\alpha \pm 1.96\sigma)$가 됩니다.</span>
+                        
+
+                        <span class="faq-q">Q5. 모델 예상 변동성이 실제보다 너무 낮을 땐 어떡하나요?</span>
+                        <span class="faq-a">글로벌 위기 직후에는 변동성 모델이 최근 시장 상황을 반영하는 데 <strong>3~6개월</strong>이 걸릴 수 있습니다. 이 기간 동안은 리스크 예산 관리에 주의해야 합니다.</span>
                     </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px;">
-                        <h3 style="color: var(--accent-blue);">Present Value</h3>
-                        <p>PV = FV / (1 + r)<sup>t</sup></p>
+                    <div>
+                        <span class="faq-q">Q6. 모델이 잘못된 시장 베타를 예측합니다.</span>
+                        <span class="faq-a">사용 중인 지역 벤치마크와 모델의 기준 벤치마크 간의 <strong>차이</strong> 때문일 가능성이 큽니다. 모델의 사용 목적과 벤치마크 설정을 점검해야 합니다.</span>
+
+                        <span class="faq-q">Q7. 왜 블룸버그 베타와 모델 베타가 다른가요?</span>
+                        <span class="faq-a">블룸버그는 과거 데이터에 <strong>동일 가중치</strong>를 주지만, 리스크 모델은 최근 데이터에 더 높은 가중치를 부여해 시계열 의존성을 반영하기 때문입니다.</span>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Slide 18: Chap 6 DCF -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">Chap 6. DCF Valuation</h2>
-                <p class="reveal reveal-delay-1">복수 현금 흐름의 현재 가치 및 미래 가치 계산</p>
-                <div class="img-container reveal reveal-delay-2">
-                    <img src="image 5.png" alt="Multiple Cash Flows">
+            <!-- Slide 8: Structure & Wave Analogy -->
+            <section class="slide">
+                <h2 class="content-reveal">07. 리스크 모델의 구조와 파도 비유</h2>
+                <div class="grid-2 content-reveal delay-1">
+                    <div class="info-box">
+                        <h3>모델 구성 단계</h3>
+                        <p>1. 최신 주식 특성 리스트 전처리 및 스케일링<br>
+                           2. 횡단면 선형회귀를 통한 팩터 수익률 도출<br>
+                           3. 공분산 행렬 구성을 통한 미래 변동성 예측</p>
+                        <p style="margin-top: 1rem;">이 결과물인 <strong>팩터 모방 포트폴리오(FMP)</strong>는 정교한 성과 분석과 리스크 헤징에 필수적입니다.</p>
+                    </div>
+                    <div>
+                        <h3>파도의 비유</h3>
+                        <p>주식 수익률은 여러 요인의 <strong>중첩</strong>으로 형성된 결과물입니다.</p>
+                        <div class="accent-box" style="background: var(--gray-light);">
+                            "큰 파도와 작은 파도가 겹쳐지듯 시장, 섹터, 스타일 팩터가 중첩됩니다. 때로는 공매도 잔고 같은 요소가 <strong>쓰나미</strong>처럼 급격한 변화를 유발하기도 합니다."
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Slide 19: Annuities -->
-        <section class="slide dark">
-            <div class="slide-content">
-                <h2 class="reveal">Annuities & Perpetuities</h2>
-                <ul class="reveal reveal-delay-1">
-                    <li><strong>Annuity (연금):</strong> 일정 기간 동안 동일한 금액 수령/지급</li>
-                    <li><strong>Perpetuity (영구연금):</strong> 영구히 동일한 금액 수령 (PV = C / r)</li>
-                    <li><strong>Preferred Stock:</strong> 영구연금의 대표적인 사례</li>
-                </ul>
-                <div class="img-container reveal reveal-delay-2">
-                    <img src="image 7.png" alt="Annuity PV">
+            <!-- Slide 9: Conclusion -->
+            <section class="slide">
+                <h2 class="content-reveal">FINAL. 멀티 팩터 모델의 최종 목적</h2>
+                <div class="content-reveal delay-1">
+                    <h1 style="color: var(--accent);">Portfolio Optimization</h1>
+                    <p style="font-size: 1.5rem; margin-bottom: 2rem;">리스크를 분해하고 통제하여 최적의 비중을 찾는 것</p>
                 </div>
-            </div>
-        </section>
+                <div class="grid-2 content-reveal delay-2">
+                    <div class="accent-box">
+                        <h3>리스크 분해 공식</h3>
+                        <div class="formula-container" style="background: #fff; border: 1px solid #ddd;">
+                            $$Cov(r) = B \times F \times B' + \Delta$$
+                        </div>
+                        <p>공분산 행렬을 팩터 기여도와 기업 고유 리스크($\Delta$)로 나누어 리스크의 원천을 파악합니다.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>기대 효과</h3>
+                        <ul>
+                            <li><strong>정교한 리스크 관리:</strong> 특정 노출을 선택적 제거</li>
+                            <li><strong>투명한 성과 기여:</strong> 수익의 원천(Factor) 규명</li>
+                            <li><strong>최적 자산 배분:</strong> 리스크 대비 수익 극대화</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Slide 20: EAR vs APR -->
-        <section class="slide light">
-            <div class="split-panel"></div>
-            <div class="slide-content">
-                <h2 class="reveal">EAR vs APR</h2>
-                <ul class="reveal reveal-delay-1">
-                    <li><strong>APR:</strong> 명목 연간 수익률 (표기용)</li>
-                    <li><strong>EAR:</strong> 실질 연간 수익률 (복리 고려)</li>
-                    <li style="font-family: monospace;">EAR = (1 + APR/m)<sup>m</sup> - 1</li>
-                </ul>
-                <p class="reveal reveal-delay-2" style="font-size: 0.9rem; color: #666;">이자 지급 주기가 짧을수록 실질 수익률(EAR)은 높아짐</p>
-            </div>
-        </section>
-
-        <!-- Slide 21: Conclusion -->
-        <section class="slide dark">
-            <div class="slide-content" style="text-align: center;">
-                <h2 class="reveal" style="border: none; padding: 0;">Summary Complete</h2>
-                <p class="reveal reveal-delay-1">Finance I - Chapters 1 to 6</p>
-                <p class="reveal reveal-delay-2" style="margin-top: 2rem; color: var(--accent-blue);">Keep Learning, Keep Investing.</p>
-            </div>
-        </section>
+        </div>
     </div>
 
+    <!-- Main JavaScript -->
     <script>
-        class SlidePresentation {
-            constructor() {
-                this.container = document.querySelector('.slides-container');
-                this.slides = document.querySelectorAll('.slide');
-                this.progressBar = document.querySelector('.progress-bar');
-                this.navDotsContainer = document.querySelector('.nav-dots');
-                
-                this.setupIntersectionObserver();
-                this.setupNavDots();
-                this.setupScrollProgress();
-                this.setupKeyboardNav();
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            // KaTeX Auto-render configuration
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
 
-            setupIntersectionObserver() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            this.updateActiveDot();
-                        }
-                    });
-                }, { threshold: 0.5 });
+            const container = document.getElementById('slidesContainer');
+            const slides = document.querySelectorAll('.slide');
+            const dotsContainer = document.getElementById('navDots');
+            const progressBar = document.getElementById('progressBar');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            let isAnimating = false;
 
-                this.slides.forEach(slide => observer.observe(slide));
-            }
+            // Generate Navigation Dots
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('.dot');
 
-            setupNavDots() {
-                this.slides.forEach((_, i) => {
-                    const dot = document.createElement('div');
-                    dot.classList.add('dot');
-                    dot.addEventListener('click', () => {
-                        this.slides[i].scrollIntoView({ behavior: 'smooth' });
-                    });
-                    this.navDotsContainer.appendChild(dot);
-                });
-                this.updateActiveDot();
-            }
-
-            updateActiveDot() {
-                const scrollPos = this.container.scrollTop;
-                const windowHeight = window.innerHeight;
-                const activeIndex = Math.round(scrollPos / windowHeight);
-                
-                const dots = document.querySelectorAll('.dot');
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === activeIndex);
-                });
-
-                // Update current slide theme for UI
-                if (this.slides[activeIndex].classList.contains('light')) {
-                    document.body.classList.add('light');
-                } else {
-                    document.body.classList.remove('light');
-                }
-            }
-
-            setupScrollProgress() {
-                this.container.addEventListener('scroll', () => {
-                    const totalHeight = this.container.scrollHeight - window.innerHeight;
-                    const progress = (this.container.scrollTop / totalHeight) * 100;
-                    this.progressBar.style.width = `${progress}%`;
-                });
-            }
-
-            setupKeyboardNav() {
-                window.addEventListener('keydown', (e) => {
-                    if (e.key === 'ArrowDown' || e.key === ' ') {
-                        this.container.scrollBy(0, window.innerHeight);
-                    } else if (e.key === 'ArrowUp') {
-                        this.container.scrollBy(0, -window.innerHeight);
+            function updateUI() {
+                dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+                slides.forEach((slide, i) => {
+                    if (i === currentSlide) slide.classList.add('active');
+                    else {
+                        // Reset animation for non-visible slides after a delay
+                        setTimeout(() => { if(i !== currentSlide) slide.classList.remove('active'); }, 800);
                     }
                 });
+                progressBar.style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
             }
-        }
 
-        new SlidePresentation();
+            function goToSlide(index) {
+                if (isAnimating || index < 0 || index >= totalSlides) return;
+                isAnimating = true;
+                currentSlide = index;
+                container.style.transform = `translateY(-${currentSlide * 100}vh)`;
+                updateUI();
+                setTimeout(() => { isAnimating = false; }, 800);
+            }
+
+            // Wheel Scroll Handling
+            window.addEventListener('wheel', (e) => {
+                if (Math.abs(e.deltaY) < 30) return;
+                if (e.deltaY > 0) goToSlide(currentSlide + 1);
+                else goToSlide(currentSlide - 1);
+            }, { passive: false });
+
+            // Keyboard Navigation Handling
+            window.addEventListener('keydown', (e) => {
+                const forwardKeys = ['ArrowDown', 'PageDown', ' ', 'Enter'];
+                const backwardKeys = ['ArrowUp', 'PageUp', 'Backspace'];
+                
+                if (forwardKeys.includes(e.key)) {
+                    e.preventDefault();
+                    goToSlide(currentSlide + 1);
+                } else if (backwardKeys.includes(e.key)) {
+                    e.preventDefault();
+                    goToSlide(currentSlide - 1);
+                }
+            });
+
+            // Set initial active state
+            slides[0].classList.add('active');
+            updateUI();
+        });
     </script>
 </body>
 </html>
